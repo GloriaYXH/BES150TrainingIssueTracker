@@ -1,0 +1,41 @@
+﻿@model GetEmployeesResponse
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+} 
+
+<h2>Employees Rock!</h2>
+
+@if(TempData.ContainsKey("flash"))
+            {
+                <div class="alert alert-info" id="flash">@TempData["flash"]</div>
+            }
+
+@foreach(var employee in Model.Employees)
+            {
+                <div>
+                    <p>@employee.FullName</p>
+                     <p>Email them at @employee.Email</p>
+                    <form method="post" asp-controller="Employees" asp-action="Fire" asp-route-id="@employee.Id">
+                        <button class="btn btn-danger" type="submit">Fire this Joker!</button>
+                    </form>
+                </div>
+            }
+
+<div>
+    <p>We have @Model.NumberOfFullTimeEmployees full time employees.</p>
+</div>
+
+<a class="btn btn-primary" asp-action="New" asp-controller="Employees">Hire A New Employee</a>
+
+
+@section Scripts {
+<script>
+    $(function () {
+        setTimeout(() => {
+            $('#flash').fadeOut(2000);
+        }, 5000);
+    });
+</script>
+}
